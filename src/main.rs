@@ -27,7 +27,8 @@ fn main() {
 
     let mut platform = WinitPlatform::init(&mut imgui);
     {
-        let window = display.gl_window().window();
+        let gl_window = display.gl_window();
+        let window = gl_window.window();
         platform.attach_window(imgui.io_mut(), window, HiDpiMode::Rounded);
     }
 
@@ -41,7 +42,8 @@ fn main() {
     };
 
     event_loop.run(move |event, _, control_flow| {
-        let window = display.gl_window().window();
+        let gl_window = display.gl_window();
+        let window = gl_window.window();
         platform.handle_event(imgui.io_mut(), window, &event);
 
         match event {
