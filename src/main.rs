@@ -59,12 +59,12 @@ fn main() {
                 let ui = imgui.frame();
 
                 if state.menu_open {
-                    Window::new("cheetozhook")
+                    ui.window("cheetozhook")
                         .size([360.0, 180.0], Condition::FirstUseEver)
-                        .build(&ui, || {
+                        .build(|| {
                             ui.text("autoclicker wlacz / wylacz");
                             ui.separator();
-                            Slider::new("CPS", 1, 30).build(&ui, &mut state.cps);
+                            ui.slider("CPS", 1, 30, &mut state.cps);
                             ui.checkbox("Autoclicker", &mut state.autoclicker_enabled);
 
                             ui.separator();
@@ -84,8 +84,9 @@ fn main() {
                 target.clear_color_srgb(0.07, 0.07, 0.09, 1.0);
 
                 platform.prepare_render(&ui, window);
+                let draw_data = imgui.render();
                 renderer
-                    .render(&mut target, ui.render())
+                    .render(&mut target, draw_data)
                     .expect("Render nieudany");
                 target.finish().expect("Swap buffers nieudane");
             }
